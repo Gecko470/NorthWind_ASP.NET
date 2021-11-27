@@ -1,0 +1,143 @@
+﻿@model IEnumerable<NorthWind.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employees";
+    int resp = -1;
+    int id = -1;
+    if (ViewBag.resp != null)
+    {
+        resp = ViewBag.resp;
+    }
+    if (ViewBag.id != null)
+    {
+        id = ViewBag.id;
+    }
+}
+
+<h2>Employees</h2>
+
+<div class="mt-3 mb-3">
+    <a class="btn btn-dark" asp-action="Create">New</a>
+</div>
+@if (resp == 0)
+{
+    <div class="row">
+        <div class="alert alert-info alert-dismissible fade show col-auto m-auto mb-3" role="alert">
+            <strong>Operación realizada correctamente: </strong> El registro con Id = @id ha sido eliminado de la Base de Datos..
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+@if (resp == 1)
+{
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible fade show col-auto m-auto mb-3" role="alert">
+            <strong>Operación no permitida con la Base de Datos: </strong> El registro que quiere borrar tiene relación con otra tabla a través de una Clave Foránea (FK)..
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Birth Date
+                </th>
+                <th>
+                    Hire Date
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    Region
+                </th>
+                <th>
+                    PC
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    Phone
+                </th>
+                <th>
+                    Extension
+                </th>
+                <th>
+                    Reports To
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model!)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BirthDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HireDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Region)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostalCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HomePhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Extension)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReportsTo)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EmployeeId"><i class="bi bi-pencil-square"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.EmployeeId"><i class="bi bi-trash text-danger"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

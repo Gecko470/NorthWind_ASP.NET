@@ -1,0 +1,162 @@
+﻿@model IEnumerable<NorthWind.Models.Product>
+@using NorthWind.Models;
+@{
+    ViewData["Title"] = "Products";
+    List<SelectListItem> categorias = ViewBag.categorias;
+    List<SelectListItem> suppliers = ViewBag.suppliers;
+    int resp = -1;
+    int id = -1;
+    if (ViewBag.resp != null)
+    {
+        resp = ViewBag.resp;
+    }
+    if (ViewBag.id != null)
+    {
+        id = ViewBag.id;
+    }
+}
+
+<h2>Products</h2>
+<div>
+    <a class="btn btn-dark" asp-action="Create">New</a>
+</div>
+
+<div class="row justify-content-end mb-3">
+
+    <div class="col-3">
+        <form class="row mb-3" id="frmSup" asp-action="FiltrarSup">
+            <label class="col-form-label col-3"><h6>Suppliers</h6></label>
+            <div class="col-5">
+                <select class="form-control" name="supplier" asp-items="@suppliers">
+                    <option value="">Select..</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-dark" type="submit"><i class="bi bi-funnel"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-3">
+        <form class="row mb-3" id="frmCat" asp-action="FiltrarCat">
+            <label class="col-form-label col-3"><h6>Categories</h6></label>
+            <div class="col-5">
+                <select class="form-control" name="categoria" asp-items="@categorias">
+                    <option value="">Select..</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-dark" type="submit"><i class="bi bi-funnel"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-2">
+        <form class="row mb-3" asp-action="Filtrar">
+            <div class="col-7">
+                <input class="form-control" name="termino" />
+            </div>
+            <div class="col-1">
+                <button class="btn btn-dark" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+@if (resp == 0)
+{
+    <div class="row">
+        <div class="alert alert-info alert-dismissible fade show col-auto m-auto mb-3" role="alert">
+            <strong>Operación realizada correctamente: </strong> El registro con Id = @id ha sido eliminado de la Base de Datos..
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+@if (resp == 1)
+{
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible fade show col-auto m-auto mb-3" role="alert">
+            <strong>Operación no permitida con la Base de Datos: </strong> El registro que quiere borrar tiene relación con otra tabla a través de una Clave Foránea (FK)..
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Product Name
+                </th>
+                <th>
+                    Supplier Id
+                </th>
+                <th>
+                    Category Id
+                </th>
+                <th>
+                    Quantity Per Unit
+                </th>
+                <th>
+                    Unit Price
+                </th>
+                <th>
+                    Stock
+                </th>
+                <th>
+                    Units On Order
+                </th>
+                <th>
+                    Reorder Level
+                </th>
+                <th>
+                    Discontinued
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model!)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SupplierId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantityPerUnit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitsInStock)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitsOnOrder)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReorderLevel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discontinued)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ProductId"><i class="bi bi-pencil-square"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.ProductId"><i class="bi bi-trash text-danger"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
