@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NorthWind.Models.Product>
+﻿@model List<NorthWind.Models.Product>
 @using NorthWind.Models;
 @{
     ViewData["Title"] = "Products";
@@ -22,7 +22,23 @@
 </div>
 
 <div class="row justify-content-end mb-3">
-
+    @for (var i = 0; i < Model.Count(); i++)
+    {
+        <input type="hidden" id=@String.Format("{0}_ProductId", i) value="@Model[i].ProductId" />
+        <input type="hidden" id=@String.Format("{0}_ProductName", i) value="@Model[i].ProductName" />
+        <input type="hidden" id=@String.Format("{0}_SupplierId", i) value="@Model[i].SupplierId" />
+        <input type="hidden" id=@String.Format("{0}_CategoryId", i) value="@Model[i].CategoryId" />
+        <input type="hidden" id=@String.Format("{0}_QuantityPerUnit", i) value="@Model[i].QuantityPerUnit" />
+        <input type="hidden" id=@String.Format("{0}_UnitPrice", i) value="@Model[i].UnitPrice" />
+        <input type="hidden" id=@String.Format("{0}_UnitsInStock", i) value="@Model[i].UnitsInStock" />
+        <input type="hidden" id=@String.Format("{0}_UnitsOnOrder", i) value="@Model[i].UnitsOnOrder" />
+        <input type="hidden" id=@String.Format("{0}_ReorderLevel", i) value="@Model[i].ReorderLevel" />
+        <input type="hidden" id=@String.Format("{0}_Discontinued", i) value="@Model[i].Discontinued" />
+    }
+    <input type="hidden" id="numRegistros" value="@Model.Count()" />
+    <div class="col-1"><button class="btn btn-dark form-control" onclick="Excel()">EXCEL</button></div>
+    <div class="col-1"><button class="btn btn-dark form-control" onclick="Word()">WORD</button></div>
+    <div class="col-1"><button class="btn btn-dark form-control" onclick="Pdf()">PDF</button></div>
     <div class="col-3">
         <form class="row mb-3" id="frmSup" asp-action="FiltrarSup">
             <label class="col-form-label col-3"><h6>Suppliers</h6></label>
