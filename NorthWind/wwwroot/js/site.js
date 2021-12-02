@@ -31,7 +31,10 @@ function Excel() {
         url: '/Home/Excel',
         data: { lista: JSON.stringify(arrayRegistros) },
         success: function (rpta) {
-            window.location = rpta;
+            var a = document.createElement("a");
+            a.href = rpta;
+            a.download = "Products.xlsx";
+            a.click();
         },
         error: function (req, textStatus, errorThrown) {
             
@@ -67,7 +70,10 @@ function Word() {
         url: '/Home/Word',
         data: { lista: JSON.stringify(arrayRegistros) },
         success: function (rpta) {
-            window.location = rpta;
+            var a = document.createElement("a");
+            a.href = rpta;
+            a.download = "Products.docx";
+            a.click();
         },
         error: function (req, textStatus, errorThrown) {
 
